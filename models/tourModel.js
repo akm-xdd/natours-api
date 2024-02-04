@@ -46,14 +46,14 @@ const tourSchema = new mongoose.Schema(
     },
     priceDiscount: {
       type: Number,
-      validate: { 
+      validate: {
         validator: function(val) {
           // this only points to current doc on NEW document creation
           return val < this.price;
         },
         message: 'Discount price ({VALUE}) should be below regular price'
       }
-    }, 
+    },
     summary: {
       type: String,
       trim: true, // remove all white space in the beginning and end of string
@@ -81,7 +81,8 @@ const tourSchema = new mongoose.Schema(
 
     secretTour: {
       type: Boolean,
-      default: false
+      default: false,
+      select: false
     }
   },
 
