@@ -2,9 +2,9 @@ const express = require('express');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
-const xssClean = require('./utils/xssCleaner');
 const mongoSanitize = require('express-mongo-sanitize');
 const hpp = require('hpp');
+const xssClean = require('./utils/xssCleaner');
 
 const AppError = require('./utils/appError');
 const GlobalErrorHandler = require('./controllers/errorController');

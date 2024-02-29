@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const slugify = require('slugify');
+// const User = require('./userModel');
 
 const tourSchema = new mongoose.Schema(
   {
@@ -77,13 +78,41 @@ const tourSchema = new mongoose.Schema(
       select: false // hide this field
     },
 
-    startDates: [Date], // array of date
+    startDates: [Date], // array of date,
 
     secretTour: {
       type: Boolean,
       default: false,
       select: false
-    }
+    },
+
+    startLocation: {
+      // GeoJSON
+      type: {
+        type: String,
+        default: 'Point',
+        enum: ['Point']
+      },
+      coordinates: [Number],
+      address: String,
+      description: String
+    },
+
+    locations: [
+      {
+        type: {
+          type: String,
+          default: 'Point',
+          enum: ['Point']
+        }, // array of object
+        coordinates: [Number],
+        address: String,
+        description: String,
+        day: Number
+      }
+    ],
+
+    guides: [{ type: mongoose.Schema.ObjectId, ref: 'User' }]
   },
 
   {
