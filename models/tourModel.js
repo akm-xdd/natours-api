@@ -113,6 +113,7 @@ const tourSchema = new mongoose.Schema(
     ],
 
     guides: [{ type: mongoose.Schema.ObjectId, ref: 'User' }]
+    // reviews: [{ type: mongoose.Schema.ObjectId, ref: 'Review' }]
   },
 
   {
@@ -132,14 +133,28 @@ tourSchema.pre(/^find/, function(next) {
   next();
 });
 
+tourSchema.pre(/^find/, function(next) {
+  this.populate({
+    path: 'guides',
+    select: '-__v -passwordChangedAt'
+  });
+  next();
+});
+
 tourSchema.post(/^find/, function(docs, next) {
   // console.log(`Query took ${Date.now() - this.start} milliseconds!`);
   // console.log(docs);
   next();
 });
-
 tourSchema.virtual('durationWeeks').get(function() {
   return this.duration / 7;
+});
+
+// Virtual populate
+tourSchema.virtual('reviews', {
+  ref: 'Review',
+  foreignField: 'tour',
+  localField: '_id'
 });
 
 tourSchema.pre('aggregate', function(next) {
